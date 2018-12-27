@@ -1,0 +1,78 @@
+<app-header></app-header>
+<div class="container">
+  <ng-content></ng-content>
+  <h1 class="text-center">Veuillez réserver votre salle de réunion</h1> <br><br>
+  <div class="jumbotron">
+    <div class="row d-flex align-items-center">
+      <div class="col-3">
+        <h5 class="titleColor">Choisir Date<span style="color: red">*</span></h5>
+      </div>
+      <div class="col-8">
+        <form #myForm="ngForm" novalidate>
+          <my-date-picker name="mydate" [options]="myDatePickerOptions" [(ngModel)]='date' (dateChanged)="onDateChanged($event)"
+            required>
+          </my-date-picker>
+        </form>
+      </div>
+    </div>
+    <div *ngIf="showFilters">
+      <div class="row d-flex align-items-center">
+        <div class="col-3">
+          <h5 class="titleColor">Choisir Créneau<span class="asteriskColor">*</span></h5>
+        </div>
+        <div class="col-4 offset-1">
+          <div class="form-group">
+            <ngb-timepicker [formControl]="startCtrl" [(ngModel)]="startingTime" required></ngb-timepicker>
+            <div class="small form-text text-danger" *ngIf="!startCtrl.valid">
+              <div *ngIf="startCtrl.errors['required']" class="small form-text text-success">Starting Time</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="form-group">
+            <ngb-timepicker [formControl]="endCtrl" [(ngModel)]="endingTime" required></ngb-timepicker>
+            <div class="small form-text text-danger" *ngIf="!endCtrl.valid">
+              <div *ngIf="endCtrl.errors['required']" class="small form-text text-success">Ending Time</div>
+              <div *ngIf="endCtrl.errors['invalidTime']">Ending Time Invalid</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <div class="col-3">
+          <h5 class="titleColor">Choisir Filtres</h5>
+        </div>
+        <div class="input-group col-sm-2 mb-4">
+          <div class="input-group-prepend">
+            <button class="btn btn-primary" type="button" disabled>Capacité :</button>
+          </div>
+          <input type="number" class="form-control" [(ngModel)]='capacity'>
+        </div>
+        <div class="col-sm-5 offset-1  d-flex align-items-start equipmentClass">
+          <p>Équipements: &nbsp;</p>
+          <div class="form-check-inline" *ngFor="let equipment of filterEquipements">
+            <label class="form-check-label">
+              <input type="checkbox" class="form-check-input" [(ngModel)]='equipment.checked'>{{ equipment.name}}
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-8 offset-3">
+          <button type="button" class="btn btn-dark btn-lg btn-block" (click)="getRooms()" [disabled]="!buttonIsActive">
+            Consulter les salles
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="timer">
+    <p class="spinnerText">Chargement...</p>
+  </ngx-spinner>
+  <div class="row">
+    <div class="col-sm-6" *ngFor="let room of availableRooms">
+      <app-room [room]="room" (bookRoom)="bookRoom(room._id)"></app-room>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

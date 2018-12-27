@@ -1,0 +1,10 @@
+<div class="card h-100">
+  <div class="card-body">
+    <h5 class="card-title">{{room.name}}</h5>
+    <p class="card-text">Description: {{room.description}}</p>
+    <p class="card-text" *ngIf="room.capacity">Capacité: {{room.capacity}}</p>
+    <p class="card-text" *ngIf="room.equipements">Équipements: </p>
+    <p class="card-text" *ngFor="let equipement of room.equipements">{{equipement.name}}</p>
+    <p class="btn btn-primary" (click)="onBook()">Réserver</p>
+  </div>
+</div>

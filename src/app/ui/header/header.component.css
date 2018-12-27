@@ -1,0 +1,13 @@
+.navBarColor {
+  background-color: black;
+}
+
+@font-face {
+  font-family: 'Cargo';
+  src: url('../../../assets/Cargo.ttf') format('truetype');
+  /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}
+
+.headerFont {
+  font-family: Cargo;
+}

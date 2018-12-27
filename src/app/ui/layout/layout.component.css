@@ -1,0 +1,25 @@
+.btn-dark:hover {
+  background-color: #ff00ae;
+}
+
+.spinnerText {
+  font-size: 20px;
+  color: white;
+}
+
+.equipmentClass {
+  margin-top: 0.5rem;
+}
+
+.titleColor {
+  color: gray;
+}
+
+.position {
+  position: relative;
+  top: 3rem;
+}
+
+.asteriskColor {
+  color: red;
+}
