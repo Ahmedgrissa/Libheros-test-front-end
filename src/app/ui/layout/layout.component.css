@@ -23,3 +23,15 @@
 .asteriskColor {
   color: red;
 }
+
+.buttonSpacing {
+  white-space: normal;
+}
+
+.timePadding {
+  padding: 0 !important;
+}
+
+.maxWidth {
+  max-width: 3.5rem !important;
+}

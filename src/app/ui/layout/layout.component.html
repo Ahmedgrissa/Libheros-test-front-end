@@ -1,11 +1,11 @@
 <app-header></app-header>
-<div class="container">
+<div class="container mb-4">
   <ng-content></ng-content>
   <h1 class="text-center mb-4">Veuillez réserver votre salle de réunion</h1>
   <div class="jumbotron">
     <div class="row d-flex align-items-center">
       <div class="col-3">
-        <h5 class="titleColor">Choisir Date<span style="color: red">*</span></h5>
+        <h5 class="titleColor">Choisir une date<span style="color: red">*</span></h5>
       </div>
       <div class="col-8">
         <form #myForm="ngForm" novalidate>
@@ -18,48 +18,47 @@
     <div *ngIf="showFilters">
       <div class="row d-flex align-items-center">
         <div class="col-3">
-          <h5 class="titleColor">Choisir Créneau<span class="asteriskColor">*</span></h5>
+          <h5 class="titleColor">Choisir un créneau<span class="asteriskColor">*</span></h5>
         </div>
-        <div class="col-4 offset-1">
-          <div class="form-group">
+        <div class="col-4 offset-1 timePadding">
+          <div class="form-group timePadding">
             <ngb-timepicker [formControl]="startCtrl" [(ngModel)]="startingTime" required></ngb-timepicker>
-            <div class="small form-text text-danger" *ngIf="!startCtrl.valid">
-              <div *ngIf="startCtrl.errors['required']" class="small form-text text-success">Starting Time</div>
-            </div>
+            <div class="medium form-text text-success">Début</div>
           </div>
         </div>
-        <div class="col-4">
+        <div class="col-4 timePadding">
           <div class="form-group">
             <ngb-timepicker [formControl]="endCtrl" [(ngModel)]="endingTime" required></ngb-timepicker>
-            <div class="small form-text text-danger" *ngIf="!endCtrl.valid">
-              <div *ngIf="endCtrl.errors['required']" class="small form-text text-success">Ending Time</div>
-              <div *ngIf="endCtrl.errors['invalidTime']">Ending Time Invalid</div>
-            </div>
+            <div class="medium form-text text-success">Fin</div>
           </div>
         </div>
       </div>
       <div class="row mb-4">
-        <div class="col-3">
-          <h5 class="titleColor">Choisir Filtres</h5>
+        <div class="col-3 col-sm-3">
+          <h5 class="titleColor">Choisir les filtres</h5>
         </div>
-        <div class="input-group col-sm-2 mb-4">
-          <div class="input-group-prepend">
-            <button class="btn btn-primary" type="button" disabled>Capacité :</button>
+        <div class="col-4 col-sm-4">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <button class="btn btn-primary" type="button" disabled>Capacité :</button>
+            </div>
+            <input type="number" class="form-control maxWidth" [(ngModel)]='capacity'>
           </div>
-          <input type="number" class="form-control" [(ngModel)]='capacity'>
         </div>
-        <div class="col-sm-5 offset-1  d-flex align-items-start equipmentClass">
-          <p>Équipements: &nbsp;</p>
-          <div class="form-check-inline" *ngFor="let equipment of filterEquipements">
-            <label class="form-check-label">
-              <input type="checkbox" class="form-check-input" [(ngModel)]='equipment.checked'>{{ equipment.name}}
-            </label>
+        <div class="equipmentClass">
+          <div class="col col-sm">
+            <p>Équipements: &nbsp;</p>
+            <div class="form-check-inline" *ngFor="let equipment of filterEquipements">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" [(ngModel)]='equipment.checked'>{{ equipment.name}}
+              </label>
+            </div>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-8 offset-3">
-          <button type="button" class="btn btn-dark btn-lg btn-block" (click)="getRooms()" [disabled]="!buttonIsActive">
+          <button type="button" class="btn btn-dark btn-lg btn-block buttonSpacing" (click)="getRooms()" [disabled]="!buttonIsActive">
             Consulter les salles
           </button>
         </div>
@@ -70,7 +69,7 @@
     <p class="spinnerText">Chargement...</p>
   </ngx-spinner>
   <div class="row">
-    <div class="col-sm-6" *ngFor="let room of availableRooms">
+    <div class="col-sm-6 mb-2" *ngFor="let room of availableRooms">
       <app-room [room]="room" (bookRoom)="bookRoom(room._id)"></app-room>
     </div>
   </div>
