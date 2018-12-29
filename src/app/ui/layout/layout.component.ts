@@ -1,5 +1,5 @@
 import { Room, Equipement } from './../../../models/roomModel';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { IMyDpOptions, IMyDateModel } from 'mydatepicker';
 import { FormControl } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css']
 })
-export class LayoutComponent implements OnInit {
+export class LayoutComponent {
 
   constructor(
     private http: HttpClient,
@@ -71,17 +71,14 @@ export class LayoutComponent implements OnInit {
     }
   });
 
-  ngOnInit() {
-    // this.date = this.getCurrentDate();
-  }
-
-  getCurrentDate() {
-    const timeStamp = new Date(Date.now());
-    const day = timeStamp.getDate();
-    const month = timeStamp.getMonth() + 1;
-    const year = timeStamp.getFullYear();
-    console.log({ date: { year: year, month: month, day: day } });
-    return { date: { year: year, month: month, day: day } };
+  getPreviousDayDate() {
+    const date = new Date();
+    date.setDate(date.getDate() - 1).valueOf();
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    console.log({ year: year, month: month, day: day });
+    return { year: year, month: month, day: day };
   }
 
   // THIS FUNCTION IS CALLED AFTER CHOOSING A TIME TO SHOW THE FILTERS
