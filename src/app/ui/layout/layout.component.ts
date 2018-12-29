@@ -92,16 +92,14 @@ export class LayoutComponent {
   getRooms() {
     this.availableRooms = [];
     if (this.startingTime && this.endingTime && this.date) {
-      this.selectedEquipements = this.filterEquipements.filter(
-        equipement => equipement.checked
-      ).map(
-        equipement => {
+      this.selectedEquipements = this.filterEquipements.filter(equipement => equipement.checked)
+        .map(equipement => {
           return { name: equipement.name };
         });
       const bookingDateAndTime = {
-              date: this.date.formatted,
-              startingTime: this.startingTime,
-              endingTime: this.endingTime
+        date: this.date.formatted,
+        startingTime: this.startingTime,
+        endingTime: this.endingTime
       };
       this.spinner.show();
       this.roomProvider.getAvailableRooms(bookingDateAndTime, this.capacity, this.selectedEquipements).subscribe(
