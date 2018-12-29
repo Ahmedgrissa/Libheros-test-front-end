@@ -47,26 +47,23 @@ export class LayoutComponent {
     }
     if (this.endingTime) {
       if (value.hour > this.endingTime.hour || (value.hour === this.endingTime.hour && value.minute > this.endingTime.minute)) {
-        console.log(this.startingTime);
-        this.endCtrl.setValue({});
         this.buttonIsActive = false;
+        this.endCtrl.setValue({ hour: value.hour + 1, minute: value.minute });
+      } else {
+        this.buttonIsActive = true;
       }
-      console.log(this.startingTime);
     }
   });
 
   endCtrl = new FormControl('', (control: FormControl) => {
     const value = control.value;
-
     if (!value) {
       return null;
     }
     if (this.startingTime) {
-      if (value.hour < this.startingTime.hour || (value.hour === this.startingTime.hour && value.minute <= this.startingTime.minute)) {
-        this.endCtrl.setValue({});
-        console.log(this.endingTime);
+      if (value.hour < this.startingTime.hour || (value.hour === this.startingTime.hour && value.minute < this.startingTime.minute)) {
         this.buttonIsActive = false;
-        return { invalidTime: true };
+        this.startCtrl.setValue({ hour: value.hour, minute: value.minute });
       } else {
         this.buttonIsActive = true;
       }
@@ -79,7 +76,6 @@ export class LayoutComponent {
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-    console.log({ year: year, month: month, day: day });
     return { year: year, month: month, day: day };
   }
 
