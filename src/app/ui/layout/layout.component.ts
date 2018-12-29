@@ -22,7 +22,9 @@ export class LayoutComponent {
   public myDatePickerOptions: IMyDpOptions = {
     dateFormat: 'yyyy-mm-dd',
     minYear: 2018,
-    showClearDateBtn: false
+    showClearDateBtn: false,
+    disableUntil: this.getPreviousDayDate(), // All dates are disabled until current date
+    markCurrentDay: true
   };
   public startingTime = { hour: 8, minute: 0 };
   public endingTime = { hour: 9, minute: 0 };
