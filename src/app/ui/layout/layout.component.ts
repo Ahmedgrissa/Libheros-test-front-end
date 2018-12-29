@@ -88,6 +88,7 @@ export class LayoutComponent {
   }
 
   getRooms() {
+    this.availableRooms = [];
     if (this.startingTime && this.endingTime && this.date) {
       this.selectedEquipements = this.filterEquipements.filter(
         equipement => equipement.checked
