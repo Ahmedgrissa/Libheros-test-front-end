@@ -5,6 +5,7 @@ import { FormControl } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { RoomProvider } from '../../../providers/room-provider'
 
 @Component({
   selector: 'app-layout',
@@ -16,7 +17,8 @@ export class LayoutComponent {
   constructor(
     private http: HttpClient,
     private spinner: NgxSpinnerService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private roomProvider: RoomProvider,
   ) { }
 
   public myDatePickerOptions: IMyDpOptions = {
@@ -95,23 +97,15 @@ export class LayoutComponent {
       ).map(
         equipement => {
           return { name: equipement.name };
-        }
-      );
-      const params = new HttpParams()
-        .set('filters', JSON.stringify(
-          {
-            bookingDateAndTime: {
+        });
+      const bookingDateAndTime = {
               date: this.date.formatted,
               startingTime: this.startingTime,
               endingTime: this.endingTime
-            }, capacity: this.capacity,
-            equipements: this.selectedEquipements
-          }));
-      const options = { params };
+      };
       this.spinner.show();
-      this.http.get<Room[]>('http://localhost:3000/api/room/', options).subscribe(
+      this.roomProvider.getAvailableRooms(bookingDateAndTime, this.capacity, this.selectedEquipements).subscribe(
         rooms => {
-          // this.availableRooms = rooms;
           this.spinner.hide();
           if (rooms.length) {
             this.availableRooms = rooms;
@@ -131,11 +125,8 @@ export class LayoutComponent {
 
   bookRoom(roomId: string) {
     const indexOfRoom = this.availableRooms.findIndex((room) => room._id === roomId);
-    const params = new HttpParams()
-      .set('filters', JSON.stringify({ date: this.date.formatted, startingTime: this.startingTime, endingTime: this.endingTime }));
-    const options = { params };
     this.spinner.show();
-    this.http.put<Room>('http://localhost:3000/api/room/' + roomId, options).subscribe(
+    this.roomProvider.book(this.date.formatted, this.startingTime, this.endingTime, roomId).subscribe(
       () => {
         // Remove Room View Booking is successfull
         this.availableRooms.splice(indexOfRoom, 1);
