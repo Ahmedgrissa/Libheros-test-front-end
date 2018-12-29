@@ -139,7 +139,7 @@ export class LayoutComponent {
         // Remove Room View Booking is successfull
         this.availableRooms.splice(indexOfRoom, 1);
         this.spinner.hide();
-        this.toastrService.success('Réservation réuissite !');
+        this.toastrService.success('Réservation effectuée avec succès !');
       },
       // In case of an error Remove spinner
       () => {
