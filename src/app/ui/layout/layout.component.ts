@@ -5,7 +5,7 @@ import { FormControl } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { RoomProvider } from '../../../providers/room-provider'
+import { RoomProvider } from '../../../providers/room-provider';
 
 @Component({
   selector: 'app-layout',
