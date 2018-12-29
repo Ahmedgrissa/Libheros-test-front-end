@@ -115,10 +115,10 @@ export class LayoutComponent {
           this.spinner.hide();
           if (rooms.length) {
             this.availableRooms = rooms;
-            const toastMessage = rooms.length + rooms.length === 1 ? ' salle disponible ' : ' salles disponibles';
+            const toastMessage = rooms.length + (rooms.length === 1 ? ' salle disponible ' : ' salles disponibles');
             this.toastrService.success(toastMessage);
           } else {
-            this.toastrService.info('Aucune salle disponible pour le créneau choisi');
+            this.toastrService.info('Aucune salle n\'est disponible');
           }
         },
         error => {
